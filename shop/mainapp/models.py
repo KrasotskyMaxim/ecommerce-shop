@@ -50,36 +50,36 @@ class Product(models.Model):
 
     
 
-# class Notebook(Product):
+class Notebook(Product):
     
-#     diagonal = models.CharField(max_length=255, verbose_name='Диагональ')
-#     display_type = models.CharField(max_length=255, verbose_name='Тип дисплея')
-#     processor_freq = models.CharField(max_length=255, verbose_name='Частота процессора')
-#     ram = models.CharField(max_length=255, verbose_name='Оперативная память')
-#     video = models.CharField(max_length=255, verbose_name='Видеокарта')
-#     time_without_charge = models.CharField(max_length=255, verbose_name='Время работы аккумулятора')
+    diagonal = models.CharField(max_length=255, verbose_name='Диагональ')
+    display_type = models.CharField(max_length=255, verbose_name='Тип дисплея')
+    processor_freq = models.CharField(max_length=255, verbose_name='Частота процессора')
+    ram = models.CharField(max_length=255, verbose_name='Оперативная память')
+    video = models.CharField(max_length=255, verbose_name='Видеокарта')
+    time_without_charge = models.CharField(max_length=255, verbose_name='Время работы аккумулятора')
     
-#     def __str__(self):
-#         return f"{self.category.name} : {self.title}"
+    def __str__(self):
+        return f"{self.category.name} : {self.title}"
     
-#     def get_absolute_url(self):
-#         return get_product_url(self, 'product_detail')
+    # def get_absolute_url(self):
+    #     return get_product_url(self, 'product_detail')
     
     
-# class Smartphone(Product):
+class Smartphone(Product):
     
-#     diagonal = models.CharField(max_length=255, verbose_name='Диагональ')
-#     display_type = models.CharField(max_length=255, verbose_name='Тип дисплея')
-#     resolution = models.CharField(max_length=255, verbose_name='Разрешения экрана')
-#     accum_volume = models.CharField(max_length=255, verbose_name='Объём батареи')
-#     ram = models.CharField(max_length=255, verbose_name='Оперативная память')
-#     sd = models.BooleanField(default=True)
-#     sd_volume_max = models.CharField(max_length=255, verbose_name='Максимальный объём встроенной памяти')
-#     main_cam_mp = models.CharField(max_length=255, verbose_name='Главная камера')
-#     frontal_cam_mp = models.CharField(max_length=255, verbose_name='Фронтальная камера')
+    diagonal = models.CharField(max_length=255, verbose_name='Диагональ')
+    display_type = models.CharField(max_length=255, verbose_name='Тип дисплея')
+    resolution = models.CharField(max_length=255, verbose_name='Разрешения экрана')
+    accum_volume = models.CharField(max_length=255, verbose_name='Объём батареи')
+    ram = models.CharField(max_length=255, verbose_name='Оперативная память')
+    sd = models.BooleanField(default=True)
+    sd_volume_max = models.CharField(max_length=255, verbose_name='Максимальный объём встроенной памяти')
+    main_cam_mp = models.CharField(max_length=255, verbose_name='Главная камера')
+    frontal_cam_mp = models.CharField(max_length=255, verbose_name='Фронтальная камера')
     
-#     def __str__(self):
-#         return f"{self.category.name} : {self.title}"
+    def __str__(self):
+        return f"{self.category.name} : {self.title}"
     
 
 class CartProduct(models.Model):

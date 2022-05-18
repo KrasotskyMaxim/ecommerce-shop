@@ -37,7 +37,7 @@
                             <a class="nav-link dropdown-toggle" id="categoriesDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Categories</a>
                             <ul class="dropdown-menu" aria-labelledby="categoriesDropdown">
                                 {% for category in categories %}
-                                <li> <a class="dropdown-item" href="#!">{{ category.name }} ({{ category.count }})</a></li>
+                                <li> <a class="dropdown-item" href="{{ category.url }}">{{ category.name }} ({{ category.count }})</a></li>
                                 {% endfor %}
                             </ul>
                         </li>

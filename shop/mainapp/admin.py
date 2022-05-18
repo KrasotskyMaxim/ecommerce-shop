@@ -43,6 +43,7 @@ class NotebookAdmin(admin.ModelAdmin):
 class SmartphoneAdmin(admin.ModelAdmin):
     
     form = ImageAdminForm
+    change_form_template = 'admin.html'
     
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
         if db_field.name == 'category':

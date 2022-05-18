@@ -14,6 +14,9 @@ def get_product_url(obj, viewname, model_name):
     ct_model = object.__class__._meta.model_name
     return reverse(viewname, kwargs={'ct_model': ct_model, 'slug': obj.slug})
 
+def get_models_for_count(*model_names):
+    return [models.Count(model_name) for model_name in model_names]
+
 
 class LatestProductsManager:
     
@@ -35,6 +38,22 @@ class LatestProducts:
     objects = LatestProductsManager()
 
 
+class CategoryManager(models.Manager):
+    
+    CATEGORY_NAME_COUNT_NAME = {
+        'Ноутбуки': 'notebook__count',
+        'Смартфоны': 'smartphone__count'
+    }
+    
+    def get_queryset(self):
+        return super().get_queryset()
+    
+    def get_categories_for_dropdown(self):
+        models = get_models_for_count('notebook', 'smartphone')
+        qs = list(self.get_queryset().annotate(*models).values())
+        return [dict(name=c['name'], slug=c['slug'], count=c[self.CATEGORY_NAME_COUNT_NAME[c['name']]]) for c in qs]
+
+
 class MinResolutionErrorException(Exception):
     pass
 
@@ -47,6 +66,7 @@ class Category(models.Model):
     
     name = models.CharField(max_length=255, verbose_name='Имя категории')
     slug = models.SlugField(unique=True)
+    objects = CategoryManager()
     
     def __str__(self):
         return self.name
@@ -107,14 +127,19 @@ class Smartphone(Product):
     resolution = models.CharField(max_length=255, verbose_name='Разрешения экрана')
     accum_volume = models.CharField(max_length=255, verbose_name='Объём батареи')
     ram = models.CharField(max_length=255, verbose_name='Оперативная память')
-    sd = models.BooleanField(default=True)
-    sd_volume_max = models.CharField(max_length=255, verbose_name='Максимальный объём встроенной памяти')
+    sd = models.BooleanField(default=True, verbose_name='Наличие SD карты')
+    sd_volume_max = models.CharField(max_length=255, blank=True, verbose_name='Максимальный объём встроенной памяти')
     main_cam_mp = models.CharField(max_length=255, verbose_name='Главная камера')
     frontal_cam_mp = models.CharField(max_length=255, verbose_name='Фронтальная камера')
     
     def __str__(self):
         return f"{self.category.name} : {self.title}"
     
+    # @property
+    # def sd(self):
+    #     if self.sd:
+    #         return 'Да'
+    #     return 'Нет'
 
 class CartProduct(models.Model):
     

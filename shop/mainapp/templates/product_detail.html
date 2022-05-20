@@ -18,10 +18,11 @@
         <h3>{{ product.title }}</h3>
         <p>Цена: {{ product.price }}$</p>
         <p>Описание: {{ product.description }}</p>
+        <hr>
+        <a href="{% url 'add_to_cart' ct_model=ct_model slug=product.slug %}"><button class="btn btn-danger">Добавить в корзину</button></a>        
         <p class='mt-4'><b>Характеристики:</b></p>
 
         {{ product|product_spec }}
-        
+        </div>
     </div>
-</div>
 {% endblock content %}

@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.views.generic import DetailView, View
 
-from .models import Notebook, Smartphone, Category
+from .models import *
 from .mixins import CategoryDetailMixin
 
 # Create your views here.
@@ -10,7 +10,16 @@ class BaseView(View):
     
     def get(self, request, *args, **kwrgs):
         categories = Category.objects.get_categories_for_dropdown()
-        return render(request, 'base.html', {'categories': categories})
+        products = LatestProducts.objects.get_products_for_main_page(
+            'notebook', 
+            'smartphone',
+            # with_respect_to='notebook'
+        )
+        context = {
+            'categories': categories,
+            'products': products
+        }
+        return render(request, 'base.html', context)
 
 
 class ProductDetailView(CategoryDetailMixin, DetailView):
@@ -37,3 +46,16 @@ class CategoryDetailView(CategoryDetailMixin, DetailView):
     context_object_name = 'category'
     template_name = 'category_detail.html'
     slug_url_kwarg = 'slug'
+    
+    
+class CartView(View):
+    
+    def get(self, request, *args, **kwargs):
+        customer = Customer.objects.get(user=request.user)
+        cart = Cart.objects.get(owner=customer)
+        categories = Category.objects.get_categories_for_dropdown()
+        context = {
+            'cart': cart,
+            'categories': categories
+        }
+        return render(request, 'cart.html', context)

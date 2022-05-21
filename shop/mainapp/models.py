@@ -111,7 +111,9 @@ class Product(models.Model):
         if img.height > max_height or img.width > max_width:
             raise MaxResolutionErrorException('Разрешение изображения больше максимального!')
         super().save(*args, **kwargs)
-
+    
+    def get_model_name(self):
+        return self.__class__.__name__.lower()
     
 
 class Notebook(Product):
@@ -160,7 +162,7 @@ class CartProduct(models.Model):
     def save(self, *args, **kwargs):
         self.final_price = self.qty * self.content_object.price
         super().save(*args, **kwargs)
-
+        
 
 class Cart(models.Model):
     

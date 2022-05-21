@@ -34,7 +34,7 @@
                         </li>
                         
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" id="categoriesDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Categories</a>
+                            <a class="nav-link dropdown-toggle active" id="categoriesDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Categories</a>
                             <ul class="dropdown-menu" aria-labelledby="categoriesDropdown">
                                 {% for category in categories %}
                                 <li> <a class="dropdown-item" href="{{ category.url }}">{{ category.name }} ({{ category.count }})</a></li>
@@ -67,8 +67,8 @@
         <!-- Section-->
         <section class="py-5">
             <div class="container px-4 px-lg-5 mt-5">
+
                 <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-                    
                 {% for product in products %}
                     <div class="col mb-5">        
                         <div class="card h-100">
@@ -83,15 +83,17 @@
                                     </h4>
                                     <!-- Product price-->
                                     <h5>{{product.price}}$</h5>
+                                    <a href="{% url 'add_to_cart' ct_model=product.get_model_name slug=product.slug %}">
+                                        <button class="btn btn-danger">Добавить в корзину</button>
+                                    </a>
                                 </div>
                             </div>
                         </div>
                     </div>
-                {% endfor %}
-                    
+                {% endfor %}    
                 </div>
+                
             </div>
-        
         {% endblock content %}
         
         </section>

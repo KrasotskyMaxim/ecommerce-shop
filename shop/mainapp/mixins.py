@@ -6,9 +6,20 @@ from .models import *
 
 class CategoryDetailMixin(SingleObjectMixin):
     
+    CATEGORY_SLUG2PRODUCT_MODEL = {
+        'notebooks': Notebook,
+        'smartphones': Smartphone
+    }
+    
     def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['categories'] = Category.objects.get_categories_for_dropdown()
+        if isinstance(self.get_object(), Category):
+            model = self.CATEGORY_SLUG2PRODUCT_MODEL[self.get_object().slug]
+            context = super().get_context_data(**kwargs)
+            context['categories'] = Category.objects.get_categories_for_dropdown()
+            context['category_products'] = model.objects.all()
+        else:
+            context = super().get_context_data(**kwargs)
+            context['categories'] = Category.objects.get_categories_for_dropdown()
         return context 
     
     
